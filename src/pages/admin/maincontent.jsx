@@ -85,8 +85,6 @@ const Dashboard = () => {
 
   return (
     <div className="bg-[#080808] min-h-screen text-white font-sans">
-      
-      {/* Navigation Buttons */}
       <div className="flex justify-between items-center  bg-[#000000] ">
         <div className="flex ">
           {Object.entries(pageTitles).map(([path, title]) => (
@@ -99,91 +97,74 @@ const Dashboard = () => {
         </div>
         <div className="text-sm cursor-pointer hover:underline px-8 py-2 border border-[#171717] hidden md:block">More</div>
       </div>
-
-      {/* Main Section */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 p-6">
+        <div className="col-span-1 xl:col-span-2 flex flex-col">
+          <div className="bg-black p-6 rounded-2xl flex flex-col flex-grow h-full">
+            <p className=" text-2xl font-bold mb-6">{pageTitle}</p>
+            <div className="flex flex-wrap gap-4 mb-6">
+              <CustomDropdown options={["Visitors", "Admin", "Regular"]} selected={userType} setSelected={setUserType} />
+              <CustomDropdown options={["Last 30 days", "Last 15 days", "Last 7 days"]} selected={timeRange} setSelected={setTimeRange} />
+              <CustomDropdown options={["+ Add", "Connects", "Interactions", "Impressions"]} selected={metric} setSelected={setMetric} />
+            </div>
 
-  {/* Left Section (Chart + Title inside Card) */}
-  <div className="col-span-1 xl:col-span-2 flex flex-col">
-    <div className="bg-black p-6 rounded-2xl flex flex-col flex-grow h-full">
-      
-      {/* Title */}
-      <p className=" text-2xl font-bold mb-6">{pageTitle}</p>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="text-4xl font-bold">13.49K</div>
+              <div className="text-green-400 text-sm">
+                +469%<br />
+                <span className="text-gray-400">(897)</span>
+              </div>
+            </div>
 
-      {/* Dropdowns */}
-      <div className="flex flex-wrap gap-4 mb-6">
-        <CustomDropdown options={["Visitors", "Admin", "Regular"]} selected={userType} setSelected={setUserType} />
-        <CustomDropdown options={["Last 30 days", "Last 15 days", "Last 7 days"]} selected={timeRange} setSelected={setTimeRange} />
-        <CustomDropdown options={["+ Add", "Connects", "Interactions", "Impressions"]} selected={metric} setSelected={setMetric} />
-      </div>
+            {/* Chart */}
+            <div className="flex-grow  h-48 min-h-[200px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={visitorData}>
+                  <XAxis dataKey="date" stroke="#888" fontSize={10} />
+                  <YAxis stroke="#888" fontSize={10} domain={[200, 2000]} />
+                  <Line type="linear" dataKey="value" stroke="#ffffff" strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
 
-      {/* Stats */}
-      <div className="flex items-center gap-4 mb-6">
-        <div className="text-4xl font-bold">13.49K</div>
-        <div className="text-green-400 text-sm">
-          +469%<br />
-          <span className="text-gray-400">(897)</span>
+          </div>
+        </div>
+
+        {/* Right Section  */}
+        <div className="bg-black p-6 rounded-2xl flex flex-col justify-between h-full">
+          <h2 className="text-2xl font-bold mb-6">Insights</h2>
+          <div className="space-y-6 flex-grow">
+            <div>
+              <p className="text-gray-400">Founders</p>
+              <p className="text-3xl font-bold">7.4K</p>
+              <p className="text-green-400 text-sm">+000%</p>
+            </div>
+            <div>
+              <p className="text-gray-400">Investors</p>
+              <p className="text-3xl font-bold">6.09K</p>
+              <p className="text-green-400 text-sm">+000%</p>
+
+              <hr className="border-gray-600 my-6 w-full" />
+
+              <button className="text-blue-400 text-sm mt-2 hover:underline flex items-center gap-3">
+                View detailed insights <span><FaArrowRightLong className='mt-1' /></span>
+              </button>
+
+            </div>
+          </div>
         </div>
       </div>
+      <div className="p-6 space-y-2">
 
-      {/* Line Chart */}
-      <div className="flex-grow  h-48 min-h-[200px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={visitorData}>
-            <XAxis dataKey="date" stroke="#888" fontSize={10} />
-            <YAxis stroke="#888" fontSize={10} domain={[200, 2000]} />
-            <Line type="linear" dataKey="value" stroke="#ffffff" strokeWidth={2} dot={false} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+        <div className="flex flex-col xl:flex-row gap-6 bg-[#000000] p-6 rounded-2xl relative overflow-hidden">
+          <h2 className="text-2xl font-bold">Demographics</h2>
+          <div className="w-full xl:w-2/3 relative">
+            <img
+              src="/img1.png"
+              alt="World Map"
+              className="w-full h-[200px] md:h-[450px]  rounded-2xl"
+            />
 
-    </div>
-  </div>
-
-  {/* Right Section (Insights) */}
-  <div className="bg-black p-6 rounded-2xl flex flex-col justify-between h-full">
-  <h2 className="text-2xl font-bold mb-6">Insights</h2>
-  <div className="space-y-6 flex-grow">
-    <div>
-      <p className="text-gray-400">Founders</p>
-      <p className="text-3xl font-bold">7.4K</p>
-      <p className="text-green-400 text-sm">+000%</p>
-    </div>
-    <div>
-      <p className="text-gray-400">Investors</p>
-      <p className="text-3xl font-bold">6.09K</p>
-      <p className="text-green-400 text-sm">+000%</p>
-
-      <hr className="border-gray-600 my-6 w-full" />
-
-      <button className="text-blue-400 text-sm mt-2 hover:underline flex items-center gap-3">
-  View detailed insights <span><FaArrowRightLong  className='mt-1'/></span>
-</button>
-
-    </div>
-  </div>
-</div>
-
-
-</div>
-
-
-     {/* Demographics Section */}
-<div className="p-6 space-y-2">
-  
-  <div className="flex flex-col xl:flex-row gap-6 bg-[#000000] p-6 rounded-2xl relative overflow-hidden">
-    
-    {/* Map Container */}  <h2 className="text-2xl font-bold">Demographics</h2>
-
-    <div className="w-full xl:w-2/3 relative">
-      {/* Static Map Image */}
-      <img 
-        src="/img1.png" 
-        alt="World Map" 
-        className="w-full h-[200px] md:h-[450px]  rounded-2xl"
-      />
-
-      {/* Markers
+            {/* Markers
       {markers.map(({ label, x, y, color }, idx) => (
         <div
           key={idx}
@@ -201,30 +182,29 @@ const Dashboard = () => {
           <span className="text-white text-xs font-bold mt-1">{label}</span>
         </div>
       ))} */}
-    </div>
+          </div>
 
-    {/* Country Progress */}
-    <div className="w-full xl:w-1/3 space-y-4">
-      {displayedCountries.map((country, index) => (
-        <CountryProgress key={index} {...country} />
-      ))}
-      <div className="flex justify-end">
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="text-blue-400 text-sm flex items-center gap-2 hover:underline"
-        >
-          {showAll ? (
-            <><FaArrowLeftLong /> Show less</>
-          ) : (
-            <>View all</>
-          )}
-        </button>
+          <div className="w-full xl:w-1/3 space-y-4">
+            {displayedCountries.map((country, index) => (
+              <CountryProgress key={index} {...country} />
+            ))}
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="text-blue-400 text-sm flex items-center gap-2 hover:underline"
+              >
+                {showAll ? (
+                  <><FaArrowLeftLong /> Show less</>
+                ) : (
+                  <>View all</>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
 
-      
+
     </div>
   );
 };
