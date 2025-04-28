@@ -178,7 +178,7 @@ const Dashboard = () => {
     <div className="w-full xl:w-2/3 relative">
       {/* Static Map Image */}
       <img 
-        src="../../../public/img1.png" 
+        src="/img1.png" 
         alt="World Map" 
         className="w-full h-[200px] md:h-[450px]  rounded-2xl"
       />
